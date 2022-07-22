@@ -1,0 +1,35 @@
+{% extends 'student_inhert.html' %}
+{% block content %}
+<div class="bs-example">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+          课程表
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th>课程名</th>
+              <th>任课教师</th>
+              <th>成绩</th>
+              <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for obj in stu %}
+        <tr>
+            <th scope="row">{{ obj.course }}</th>
+            <td>{{ obj.teacher_name }}</td>
+            <td>{{ obj.grade }}</td>
+            <td>
+                <a class="btn btn-primary btn-xs" href="/test/?course={{ obj.course }}">查看试题</a>
+                <a class="btn btn-primary btn-xs" href="/student/grade/?course={{ obj.course }}">查看成绩</a>
+            </td>
+        </tr><br>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+{% endblock %}

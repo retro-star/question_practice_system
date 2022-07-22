@@ -1,0 +1,22 @@
+{% extends 'admin_inhert.html' %}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">添加用户</div>
+        <div class="panel-body">
+            <form method="post" novalidate enctype="multipart/form-data">
+                {% csrf_token %}
+                    {% for user in form%}
+                        <div class="form-group">
+                            <label>{{ user.label }}：</label>{{ user }}{{ user.errors }}
+                        </div>
+                    {% endfor %}
+                <div class="form-group">
+                    <label >文件批量注册</label>
+                    <input type="file" name="exc">
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+</div>
+
+{% endblock %}

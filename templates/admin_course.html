@@ -1,0 +1,18 @@
+{% extends 'admin_inhert.html' %}
+{% block content %}
+<div class="p">
+        {% csrf_token %}
+        <label>
+            {% for obj in course %}
+                {{ obj.the_course }}
+                {{ obj.teacher_name }}
+                <select name="course_pass" id={{ obj.course_pass }}>
+                <option value="1">待审核</option>
+                <option value="2">通过</option>
+                <option value="3">不通过</option>
+                </select>
+                <a  class="submit-row" href="/admin/course/?course={{ obj.the_course }}">提交</a><br>
+            {% endfor %}
+        </label>
+</div>
+{% endblock %}

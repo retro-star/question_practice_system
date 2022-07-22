@@ -1,0 +1,134 @@
+{% extends 'student_inhert.html' %}
+{% block content %}
+    <div class="container" style="color: red;text-align: center" >
+        <h3>{{course }}考试</h3>
+    </div>
+
+    <div class="bs-example">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+              选择题
+          </div>
+
+          <table class="table table-bordered">
+            <tbody>
+            <form method="post" id="cho_anw">
+                {% for obj in choice %}
+                    <tr>
+                        <td>
+                            <p>题目：{{ obj.question }}</p>
+                            <p><input type="radio" name={{ obj.question }} value='A'>A.{{ obj.optionA }}</p>
+                            <p><input type="radio" name={{ obj.question }} value='B'>B.{{ obj.optionB }}</p>
+                            <p><input type="radio" name={{ obj.question }} value='C'>C.{{ obj.optionC }}</p>
+                            <p><input type="radio" name={{ obj.question }} value='D'>D.{{ obj.optionD }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </form>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="bs-example">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+              判断题
+          </div>
+
+          <table class="table table-bordered">
+            <tbody>
+            <form method="post" id="tf_anw">
+                {% for obj in tf %}
+                    <tr>
+                        <td>
+                            <p>题目：{{ obj.question }}
+                            <input type="radio" name={{ obj.question }} value="1">正确
+                            <input type="radio" name={{ obj.question }} value="0">错误</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </form>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="bs-example">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+              填空题
+          </div>
+
+          <table class="table table-bordered">
+            <tbody>
+                <form method="post" id="com_anw">
+                    {% for obj in completion %}
+                        <tr>
+                            <td>
+                                <p>题目：{{ obj.question }} <input type="text" name={{ obj.question }}></p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </form>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="container" style="text-align: center">
+        <input id="test_submit" type="button" class="btn btn-primary" value="提交试卷">
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $(function (){
+            choice_anw();
+            tf_anw();
+            com_anw();
+        });
+        function choice_anw(){
+            $('#test_submit').click(function (){
+                $.ajax({
+                    url:'/test/cho_anw/',
+                    type:'post',
+                    data:$('#cho_anw').serialize(),
+                    dataType:'JSON',
+                    success:function (res){
+                    }
+                })
+            })
+        }
+        function tf_anw(){
+            $('#test_submit').click(function (){
+                $.ajax({
+                    url:'/test/tf_anw/',
+                    type:'post',
+                    data:$('#tf_anw').serialize(),
+                    dataType:'JSON',
+                    success:function (res){
+                        if(res.status){
+                            alert('提交成功')
+                        }
+                    }
+                })
+            })
+        }
+        function com_anw(){
+            $('#test_submit').click(function (){
+                $.ajax({
+                    url:'/test/com_anw/',
+                    type:'post',
+                    data:$('#com_anw').serialize(),
+                    dataType:'JSON',
+                    success:function (res){
+                    }
+                })
+            })
+        }
+    </script>
+{% endblock %}

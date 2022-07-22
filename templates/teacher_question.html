@@ -1,0 +1,260 @@
+{% extends 'teacher_inhert.html' %}
+{% block content %}
+    <div>
+        <input type="button" value="添加选择题" class="btn btn-primary" data-toggle="modal" data-target="#choice">
+    </div>
+    <div class="bs-example">
+                <div class="panel panel-default">
+
+                  <div class="panel-heading">
+                      <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      选择题
+                  </div>
+
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                          <th>题目</th>
+                          <th>选项A</th>
+                          <th>选项B</th>
+                          <th>选项C</th>
+                          <th>选项D</th>
+                          <th>答案</th>
+                          <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in choice %}
+                        <tr>
+                            <th scope="row">{{ obj.question }}</th>
+                            <td>{{ obj.optionA }}</td>
+                            <td>{{ obj.optionB }}</td>
+                            <td>{{ obj.optionC }}</td>
+                            <td>{{ obj.optionD }}</td>
+                            <td>{{ obj.answer }}</td>
+                            <td><a class="btn btn-primary btn-xs" href="//">删除此题</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+    <div>
+        <input type="button" value="添加判断题" class="btn btn-primary" data-toggle="modal" data-target="#tf">
+    </div>
+    <div class="bs-example">
+                <div class="panel panel-default">
+
+                  <div class="panel-heading">
+                      <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      判断题
+                  </div>
+
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                          <th>题目</th>
+                          <th>答案</th>
+                          <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in tf %}
+                        <tr>
+                            <th scope="row">{{ obj.question }}</th>
+                            <td>{{ obj.answer }}</td>
+                            <td><a class="btn btn-primary btn-xs">删除此题</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+    <div>
+        <input type="button" value="添加填空题" class="btn btn-primary" data-toggle="modal" data-target="#Completion">
+    </div>
+    <div class="bs-example">
+                <div class="panel panel-default">
+
+                  <div class="panel-heading">
+                      <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      填空题
+                  </div>
+
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                          <th>题目</th>
+                          <th>答案</th>
+                          <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in completion %}
+                        <tr>
+                            <th scope="row">{{ obj.question }}</th>
+                            <td>{{ obj.answer }}</td>
+                            <td><a class="btn btn-primary btn-xs">删除此题</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+    <div class="modal fade" id="choice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加选择题</h4>
+          </div>
+          <div class="modal-body">
+            <form id="cho_add">
+                {% for form in cho_form %}
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>{{ form.label }}</label>
+                            {{ form }}
+                            <span class="error-msg" style="color:red"></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button  id="cho_btn" type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="tf" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加判断题</h4>
+          </div>
+          <div class="modal-body">
+            <form id="tf_add">
+                {% for form in tf_form %}
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>{{ form.label }}</label>
+                            {{ form }}
+                            <span class="error-msg" style="color:red"></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="tf_btn" type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="Completion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加填空题</h4>
+          </div>
+          <div class="modal-body">
+            <form id="com_add">
+                {% for form in com_form %}
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>{{ form.label }}</label>
+                            {{ form }}
+                            <span class="error-msg" style="color:red"></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="com_btn" type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $(function (){
+            choice();
+            tf();
+            com();
+        });
+        function choice(){
+            $('#cho_btn').click(function (){
+                $(".error-msg").empty();
+                $.ajax({
+                    url:'/choice/',
+                    type:'post',
+                    data:$('#cho_add').serialize(),
+                    dataType:"JSON",
+                    success:function (res){
+                        if(res.status){
+                            alert('添加成功');
+                        }else {
+                            $.each(res.error,function (name,errorList){
+                                $("#id_"+name).next().text(errorList[0]);
+                            })
+                        }
+                    }
+                })
+            });
+        }
+        function tf(){
+            $('#tf_btn').click(function (){
+                $(".error-msg").empty();
+                $.ajax({
+                    url:'/tf/',
+                    type:'post',
+                    data:$('#tf_add').serialize(),
+                    dataType:"JSON",
+                    success:function (res){
+                        if(res.status){
+                            alert('添加成功');
+                        }else {
+                            $.each(res.error,function (name,errorList){
+                                $("#id_"+name).next().text(errorList[0]);
+                            })
+                        }
+                    }
+                })
+            });
+        }
+        function com(){
+            $('#com_btn').click(function (){
+                $(".error-msg").empty();
+                $.ajax({
+                    url:'/com/',
+                    type:'post',
+                    data:$('#com_add').serialize(),
+                    dataType:"JSON",
+                    success:function (res){
+                        if(res.status){
+                            alert('添加成功');
+                        }else {
+                            $.each(res.error,function (name,errorList){
+                                $("#id_"+name).next().text(errorList[0]);
+                            })
+                        }
+                    }
+                })
+            });
+        }
+    </script>
+{% endblock %}
